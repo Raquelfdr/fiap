@@ -14,9 +14,11 @@ import java.util.List;
 
 public class Main {
 
+
     public static void main(String[] args) {
+
         // Criacao do objeto bot com as informacoes de acesso.
-        TelegramBot bot = new TelegramBot("");
+        TelegramBot bot = new TelegramBot("token");
 
         // Objeto responsavel por receber as mensagens.
         GetUpdatesResponse updatesResponse;
@@ -56,14 +58,14 @@ public class Main {
 
                 // Envio da mensagem de resposta.
                 if (update.message().text().startsWith("Boa noite")) {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Boa noite, Raquel. Como você está?"));
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Boa noite, Raquel. Como vocï¿½ estï¿½?"));
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
-                } else if (update.message().text().startsWith("Qual a cotação do dólar hoje?")) {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "A cotação do dólar é R$5,19"));
+                } else if (update.message().text().startsWith("Qual a cotaï¿½ï¿½o do dï¿½lar hoje?")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "A cotaï¿½ï¿½o do dï¿½lar ï¿½ R$5,19"));
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
 
                 } else {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Não entendi..."));
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Nï¿½o entendi..."));
                     // Verificacao de mensagem enviada com sucesso.
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
                 }
