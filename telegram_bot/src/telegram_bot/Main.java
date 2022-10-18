@@ -13,12 +13,10 @@ import com.pengrad.telegrambot.response.SendResponse;
 import java.util.List;
 
 public class Main {
-
-
     public static void main(String[] args) {
 
         // Criacao do objeto bot com as informacoes de acesso.
-        TelegramBot bot = new TelegramBot("token");
+        TelegramBot bot = new TelegramBot("TOKEN");
 
         // Objeto responsavel por receber as mensagens.
         GetUpdatesResponse updatesResponse;
@@ -47,7 +45,9 @@ public class Main {
 
                 // Atualizacao do off-set.
                 m = update.updateId() + 1;
-                String user = update.message().chat().username();
+
+                //Capturar nome do usuário
+                String user = update.message().chat().firstName();
 
                 System.out.println("Recebendo mensagem: " + update.message().text());
 
@@ -58,15 +58,25 @@ public class Main {
                 System.out.println("Resposta de Chat Action Enviada? " + baseResponse.isOk());
 
                 // Envio da mensagem de resposta.
-                if (update.message().text().matches("^Boa noite")) {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Boa noite, " + user + ". Como você está?"));
+                // Inclusão de regex para identificar o padrão das perguntas
+                if (update.message().text().matches(".*(?i)Oi.*|.*(?i)Olá.*|.*(?i)Ola.*|.*(?i)Bom dia.*|.*(?i)Boa noite.*|.*(?i)Boa tarde.*|")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Olá, " + user + ". Tudo bem com você?"));
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
-                } else if (update.message().text().matches("^Qual a cotação do dólar hoje?")) {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "A cotação do dólar é R$5,19"));
+                } else if (update.message().text().matches("^(?i)sim.*|.*(?i)bem.*|.*(?i)ótimo.*|.*(?i)otimo.*")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Bom saber que está bem. Fico muito feliz"));
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
-
+                } else if (update.message().text().matches("^(?i)não$|^(?i)nao$|.*(?i)mal.*|.*(?i)péssimo.*")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Poxa! " +
+                            "Posso fazer algo por você?"));
+                    System.out.println("Mensagem Enviada? " + sendResponse.isOk());
+                } else if (update.message().text().matches(".*(?i)pode sim.*|^(?i)pode.*")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Me diga então o que posso fazer por você? "));
+                    System.out.println("Mensagem Enviada? " + sendResponse.isOk());
+                } else if (update.message().text().matches(".*(?i)não pode.*|.*(?i)nao pode.*|")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Que pena, desejo um ótimo dia pra você"));
+                    System.out.println("Mensagem Enviada? " + sendResponse.isOk());
                 } else {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "N�o entendi..."));
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Não entendi..."));
                     // Verificacao de mensagem enviada com sucesso.
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
                 }
