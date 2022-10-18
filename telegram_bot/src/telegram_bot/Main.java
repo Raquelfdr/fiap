@@ -47,6 +47,7 @@ public class Main {
 
                 // Atualizacao do off-set.
                 m = update.updateId() + 1;
+                String user = update.message().chat().username();
 
                 System.out.println("Recebendo mensagem: " + update.message().text());
 
@@ -57,11 +58,11 @@ public class Main {
                 System.out.println("Resposta de Chat Action Enviada? " + baseResponse.isOk());
 
                 // Envio da mensagem de resposta.
-                if (update.message().text().startsWith("Boa noite")) {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Boa noite, Raquel. Como voc� est�?"));
+                if (update.message().text().matches("^Boa noite")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Boa noite, " + user + ". Como você está?"));
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
-                } else if (update.message().text().startsWith("Qual a cota��o do d�lar hoje?")) {
-                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "A cota��o do d�lar � R$5,19"));
+                } else if (update.message().text().matches("^Qual a cotação do dólar hoje?")) {
+                    sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "A cotação do dólar é R$5,19"));
                     System.out.println("Mensagem Enviada? " + sendResponse.isOk());
 
                 } else {
